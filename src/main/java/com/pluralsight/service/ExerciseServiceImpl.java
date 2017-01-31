@@ -40,6 +40,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 	@Transactional
 	public Exercise save(Exercise exercise) {
 
+		//spring data jpa ma wbudowane wszystkie te metody np.save
 		exercise = exerciseRepository.save(exercise);
 		return exercise;
 	}
