@@ -2,14 +2,30 @@ package com.pluralsight.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
 import com.pluralsight.model.Goal;
 import com.pluralsight.model.GoalReport;
 
-public interface GoalRepository {
+//nie potrzebne po uzyciu spring data jpa
+//public interface GoalRepository {
+//
+//	Goal save (Goal goal);
+//
+//	List<Goal> loadAll();
+//
+//	List<GoalReport> findAllGoalReports();
+//}
 
-	Goal save (Goal goal);
 
-	List<Goal> loadAll();
-
+@Repository("goalRepository")
+public interface GoalRepository extends JpaRepository<Goal, Long> {
+	
+	//query skopiowane tutaj z Goal.java
+	//potrzebne jest tylko do findAllGoalReports reszta z biblioteki spring data jpa 
+	@Query("Select new com.pluralsight.model.GoalReport(g.minutes, e.minutes, e.activity) "
+			+ "from Goal g, Exercise e where g.id = e.goal.id")
 	List<GoalReport> findAllGoalReports();
 }
